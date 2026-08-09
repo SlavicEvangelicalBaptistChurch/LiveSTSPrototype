@@ -5,7 +5,8 @@ import torch
 import tomllib
 import time
 from faster_whisper import WhisperModel
-from huggingface_hub import login
+from huggingface_hub import login, try_to_load_from_cache
+from pathlib import Path
 
 class WhisperSegment:
     def __init__(self):
@@ -25,7 +26,12 @@ class WhisperSegment:
         model_size = config['whisper']['size'] or "large-v3"
         compute_type = config['whisper']['compute_type'] or "float16"
         print("Using model size (SYSTRAN):", model_size)
-
+        
+        # cached_file = try_to_load_from_cache(
+        #     repo_id="bzikst/faster-whisper-large-v3-russian", 
+        #     filename="config.json"
+        # )
+        # model_folder = Path(cached_file).parent
         self.model = WhisperModel(model_size, device=device, compute_type=compute_type)
 
         # Load banned phrases (common whisper hallucinations / unwanted transcriptions)
@@ -48,12 +54,16 @@ class WhisperSegment:
     def transcribe(self, segment):
         gen_segments, info = self.model.transcribe(
             segment,
-            language="ru",
-            beam_size=5,
+            language=None,
+            beam_size=8,
             word_timestamps=False,
-            task="transcribe",
+            task="translate",
             condition_on_previous_text=False,
-            repetition_penalty=1.00
+            repetition_penalty=1.2,
+            no_speech_threshold=0.7,      # Increase to ignore more quiet/ambient sounds (default is 0.6)
+            log_prob_threshold=-0.5,      # Stricter confidence filter (default is -1.0; closer to 0 = stricter)
+            compression_ratio_threshold=2.2, # Drops repetitive hallucinations common in quiet audio (default is 2.4)
+            vad_filter=True               # Cuts out non-speech segments entirely prior to processing
         )
 
         #start = time.perf_counter()
@@ -63,8 +73,10 @@ class WhisperSegment:
         segments = []
         for gen_segment in gen_segments:
             text = gen_segment.text.strip()
-            if text in self._banned_phrases:
+            cont = False
+            if(text.lower() in self._banned_phrases):
                 continue
+            
             segments.append((gen_segment.start, text))
 
         return segments
@@ -73,6 +85,6 @@ class WhisperSegment:
         #     for word in gen_segment.words:
         #         print("[%.2f] %s" % (word.start, word.word.strip()), flush=True)
 
-        elapsed = time.perf_counter() - start
-        print(f"Elapsed: {elapsed:.2f}s ({elapsed * 1000:.0f}ms)")
-        print("written transcripts in autodetected language")
+        # elapsed = time.perf_counter() - start
+        # print(f"Elapsed: {elapsed:.2f}s ({elapsed * 1000:.0f}ms)")
+        # print("written transcripts in autodetected language")

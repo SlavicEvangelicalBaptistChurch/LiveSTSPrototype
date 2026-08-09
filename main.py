@@ -54,7 +54,7 @@ def _playback_worker(
                     continue
 
                 if segment is None:
-                    break  # sentinel — shut down
+                    break 
 
                 chunk_size = 1024
                 pos = 0
@@ -87,17 +87,12 @@ try:
         segments = whisperSegment.transcribe(segment)
         if(len(segments) == 0):
             continue
-        print(segments)
 
-        comb = ""
         for seg in segments:
-            comb += f"{seg[1]} "
-        comb = comb.strip()
-
-        translated = translator.translate(comb, lang_dest="en")
-        print("[%.2f] %s" % (segments[0][0], translated), flush=True)
-        translated_segment = speech.toVoice(translated)
-        segment_queue.put(translated_segment)
+            #translated = translator.translate(comb, lang_dest="en")
+            print("[%.2f] %s" % (segments[0][0], seg[1]), flush=True)
+            audio_segment = speech.toVoice(seg[1].strip())
+            segment_queue.put(audio_segment)
 except KeyboardInterrupt:
     print("\nStopping...")
 finally:

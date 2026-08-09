@@ -18,7 +18,7 @@ class Speech:
         return cls._instance
 
     def _init(self):
-        self.blend = VoiceBlend.parse("am_fenrir:70,am_michael:30")
+        self.blend = VoiceBlend.parse("af_heart")
         self.pipe = KokoroPipeline(PipelineConfig(
                 provider="cuda",
                 voice=self.blend))
