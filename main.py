@@ -21,8 +21,8 @@ for i, dev in enumerate(devices):
     if dev["max_output_channels"] > 0:
         print(f"  [{i}] {dev['name']} (default_sr={dev['default_samplerate']})")
 
-selected_input_device = 1  # Change to e.g. 1 to use a specific device
-selected_output_device = 7  # Change to e.g. 3 to use a specific output device; None = system default
+selected_input_device = 9  # Change to e.g. 1 to use a specific device
+selected_output_device = 4  # Change to e.g. 3 to use a specific output device; None = system default
 sample_rate = 24000
 
 input_name = sd.query_devices(selected_input_device)['name'] if selected_input_device is not None else 'system default'

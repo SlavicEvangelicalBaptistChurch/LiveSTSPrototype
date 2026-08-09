@@ -6,3 +6,7 @@ faster-whisper
 python-dotenv
 pykokoro
 onnxruntime-gpu==1.20.2
+numpy
+sounddevice
+webrtcvad
+setuptools==81.0.0

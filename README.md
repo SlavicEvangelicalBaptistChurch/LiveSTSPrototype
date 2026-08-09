@@ -27,6 +27,15 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+If you cannot install cuda version of torch after the installation of all requirements run:
+
+```
+pip uninstall torch torchvision -y
+pip install --index-url https://download.pytorch.org/whl/cu128 torch torchvision
+```
+
+in terminal
+
 ### Launch
 
 Activate local virtual environment:
