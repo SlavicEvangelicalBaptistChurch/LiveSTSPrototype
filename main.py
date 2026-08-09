@@ -82,7 +82,7 @@ try:
     playback_thread.start()
 
     for segment in live_audio_segments(device=selected_input_device, sample_rate=sample_rate):
-        print(f"Got speech segment: {len(segment)} samples, {len(segment) / sample_rate:.2f}s")
+        # print(f"Got speech segment: {len(segment)} samples, {len(segment) / sample_rate:.2f}s")
 
         segments = whisperSegment.transcribe(segment)
         if(len(segments) == 0):
