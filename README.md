@@ -34,15 +34,15 @@ pip uninstall torch torchvision -y
 pip install --index-url https://download.pytorch.org/whl/cu128 torch torchvision
 ```
 
-in terminal
-
 ### Launch
 
-Activate local virtual environment:
+Activate local virtual environment and then run:
 
 ```
 python main.py
 ```
+
+Pay attention to warning messages and debugs to make sure you are using cuda instead of cpu for whisper and kokoro.
 
 ## Why CUDA
 
