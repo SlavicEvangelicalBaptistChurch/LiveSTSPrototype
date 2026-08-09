@@ -164,7 +164,7 @@ class _AudioSegmenter:
                     self._absolute_sample_index += len(dropped)
                 # Run VAD on the new frames
                 self._process_vad_frames(chunk)
-
+        print(sd.query_devices())
         self._stream = sd.InputStream(
             samplerate=self._sample_rate,
             channels=1,

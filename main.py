@@ -10,25 +10,32 @@ from translate import Translator
 from whisper import WhisperSegment
 from speech import Speech
 
+selected_input_device: int = 0
+selected_output_device: int = 0
+
 print("Available input devices:")
 devices = sd.query_devices()
 for i, dev in enumerate(devices):
     if dev["max_input_channels"] > 0:
         print(f"  [{i}] {dev['name']} (default_sr={dev['default_samplerate']})")
 
+selected_input_device = int(input("Select input device eg. 1: "))
+
 print("\nAvailable output devices:")
 for i, dev in enumerate(devices):
     if dev["max_output_channels"] > 0:
         print(f"  [{i}] {dev['name']} (default_sr={dev['default_samplerate']})")
 
-selected_input_device = 9  # Change to e.g. 1 to use a specific device
-selected_output_device = 4  # Change to e.g. 3 to use a specific output device; None = system default
+selected_output_device = int(input("Select output device eg. 1: "))
+
 sample_rate = 24000
 
 input_name = sd.query_devices(selected_input_device)['name'] if selected_input_device is not None else 'system default'
 output_name = sd.query_devices(selected_output_device)['name'] if selected_output_device is not None else 'system default'
+
 print(f"\nInput device: {input_name}")
 print(f"Output device: {output_name}")
+
 print("Listening for speech segments... (Ctrl+C to stop)")
 
 def _playback_worker(
