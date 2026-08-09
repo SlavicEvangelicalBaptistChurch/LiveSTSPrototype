@@ -1,0 +1,8 @@
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch
+torchvision
+deep-translator
+faster-whisper
+python-dotenv
+pykokoro
+onnxruntime-gpu==1.20.2
