@@ -1,27 +1,23 @@
-# import os
-#
-# cudnn_dir = r"D:\Development\SEBC\TTSTest\.venv\Lib\site-packages\nvidia\cudnn\bin"
-# if os.path.isdir(cudnn_dir):
-#     os.environ["PATH"] = cudnn_dir + os.pathsep + os.environ["PATH"]
-# else:
-#     print("cudnn bin folder not found at expected path — check actual location")
-
 from pykokoro import KokoroPipeline, PipelineConfig
 from pykokoro.onnx_backend import VoiceBlend
 
 class Speech:
     _instance = None
-    def __new__(cls):
+    def __new__(cls, voice):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance._init()
+            cls._instance._init(voice)
         return cls._instance
 
-    def _init(self):
-        self.blend = VoiceBlend.parse("am_fenrir:70,am_michael:30")
+    def _init(self, voice):
+        if("," in voice):
+            self.voice = VoiceBlend.parse(voice)
+        else:
+            self.voice = voice
+
         self.pipe = KokoroPipeline(PipelineConfig(
                 provider="cuda",
-                voice=self.blend))
+                voice=self.voice))
         self.pipe.run("Warming up.")
 
     def toVoice(self, text):
