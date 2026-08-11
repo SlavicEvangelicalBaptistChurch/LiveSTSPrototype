@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 import torch
 import tomllib
 from faster_whisper import WhisperModel
-from huggingface_hub import login, try_to_load_from_cache
-
+from huggingface_hub import login
 
 class WhisperSegment:
     def __init__(self, model_size, compute_type, language, translate_method):
@@ -31,7 +30,7 @@ class WhisperSegment:
         print(f'Using model size (SYSTRAN): {model_size} ({compute_type}) on {device}')
 
         self._banned_phrases: set[str] = set()
-        banned_path = "whisper_banned_phrases_ru.txt"
+        banned_path = "banned_whisper.txt"
         if os.path.isfile(banned_path):
             with open(banned_path, encoding="utf-8") as bf:
                 for line in bf:

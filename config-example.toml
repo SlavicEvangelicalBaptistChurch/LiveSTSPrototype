@@ -1,7 +1,14 @@
 [whisper]
 compute_type = "float16"
+#compute_types:
+#
+#float32
+#float16
+#int8
+#int8_float16
+
 language="auto"
-size = "large-v3-turbo"
+size = "large-v3"
 # sizes:
 #
 # tiny.en
