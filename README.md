@@ -19,7 +19,7 @@ Audio to bit data with 24KHz sample rate -> Faster Whisper (large-v3) -> Transla
 
 ### Install in venv
 
-For Cuda to work with the models, faster-whisper requires Nvidia libraries for CUDA 12, while ONNX runtime can 
+For Cuda to work with the models, faster-whisper requires Nvidia libraries for CUDA 12, while ONNX runtime relies on cudNN and can be used with libraries for CUDA 13.
 
 Inside the directory run:
 
