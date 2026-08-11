@@ -1,6 +1,7 @@
 [whisper]
-size = "large-v3"
 compute_type = "float16"
+language="auto"
+size = "large-v3-turbo"
 # sizes:
 #
 # tiny.en
@@ -23,3 +24,22 @@ compute_type = "float16"
 # large-v3-turbo
 # turbo
 
+[translate]
+method="google"
+# methods:
+#
+# google
+# google-byline
+# whisper
+
+target="en"
+# Note, cannot use whisper method if target is not "en"
+
+[synthesize]
+method="chunk"
+# methods:
+#
+# chunk
+# byline
+
+kokoro_voice="af_heart"
