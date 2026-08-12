@@ -23,7 +23,7 @@ def live_audio_segments(
     vad_aggressiveness: int = 2,
     frame_duration_ms: int = 30,
     min_speech_duration_ms: int = 250,
-    max_speech_duration_ms: int = 10_000,
+    max_speech_duration_ms: int = 30_000,
     silence_duration_ms: int = 500,
     buffer_size_seconds: float = 60.0,
     device: Optional[int] = None,

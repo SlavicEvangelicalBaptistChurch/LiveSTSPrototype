@@ -5,7 +5,7 @@ deep-translator
 faster-whisper
 python-dotenv
 pykokoro
-onnxruntime-gpu==1.20.2
+onnxruntime-gpu
 numpy
 sounddevice
 webrtcvad
