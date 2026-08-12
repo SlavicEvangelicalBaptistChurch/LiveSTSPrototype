@@ -110,7 +110,7 @@ try:
 
         translated_list = []
         final_text = ""
-        if(translate_method == "google" or lang_target == "en"):
+        if(translate_method == "google"):
             for seg in segments:
                 translated_list.append(seg[1])
             final_text = " ".join(translated_list)
